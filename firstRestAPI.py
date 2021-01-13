@@ -40,7 +40,6 @@ def get_users():
    if request.method == 'GET':
       search_username = request.args.get('name')
       search_job = request.args.get('job')
-#      print("\n"+ search_job+"\n")
       if search_username and search_job:
          subdict = {'users_list' : []}
          for user in users['users_list']:
