@@ -35,10 +35,18 @@ users = {
       }
    ]
 }
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users', methods=['GET', 'POST', 'DELETE'])
 def get_users():
    if request.method == 'GET':
       search_username = request.args.get('name')
+      search_job = request.args.get('job')
+#      print("\n"+ search_job+"\n")
+      if search_username and search_job:
+         subdict = {'users_list' : []}
+         for user in users['users_list']:
+            if user['name'] == search_username and user['job'] == search_job:
+               subdict['users_list'].append(user)
+         return subdict
       if search_username :
          subdict = {'users_list' : []}
          for user in users['users_list']:
@@ -51,12 +59,21 @@ def get_users():
       users['users_list'].append(userToAdd)
       resp = jsonify(success=True)
       return resp
+   elif request.method == 'DELETE':
+      user_id = request.args.get('id')
+      if user_id:
+         subdict = {'users_list': []}
+         for user in users['users_list']:
+            if user['id'] != user_id:
+               subdict['users_list'].append(user)
+         return subdict
+      return users
 
 @app.route('/users/<id>')
 def get_user(id):
-   if id:
+   if id :
       for user in users['users_list']:
-         if user['id'] == id:
-            return user
+        if user['id'] == id:
+           return user
       return ({})
    return users
