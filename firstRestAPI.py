@@ -71,7 +71,8 @@ def get_users():
          for user in users['users_list']:
             if user['id'] != user_id:
                subdict['users_list'].append(user)
-         return subdict
+         resp = make_response(jsonify(success=True), 204)
+         return resp
       return users
 
 @app.route('/users/<id>')
