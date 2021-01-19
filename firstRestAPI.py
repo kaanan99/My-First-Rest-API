@@ -62,7 +62,7 @@ def get_users():
       userToAdd = request.get_json()
       userToAdd["id"] = generate_username(1)[0]
       users['users_list'].append(userToAdd)
-      resp = make_response(jsonify(success=True), 201)
+      resp = make_response(jsonify(userToAdd), 201)
       return resp
    elif request.method == 'DELETE':
       user_id = request.args.get('id')
